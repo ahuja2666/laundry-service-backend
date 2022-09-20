@@ -1,24 +1,17 @@
 // get post and delete orders only loged in user can do
 const router = require("express").Router();
 const orders = require("../models/orderModel");
-
-// router.get("/orders", async (req, res) => {
-//   const allOrders = await orders.find({ user: req.user });
-//   res.status(200).json({
-//     allOrders
-//   })
-// });
-
-const express = require('express');
+let orderIdString = "OR";
+let orderIdModel = require("../models/orderId");
 
 
-
+// getting all orders
 router.get('/', async (req, res) => {
   try {
-    const data = await orders.find();
+    const data = await orders.find({ user: req.user });
     res.status(200).json({
       status: "success",
-      posts: data
+      data: data
     })
   } catch (error) {
     res.status(500).json({
@@ -26,16 +19,43 @@ router.get('/', async (req, res) => {
       message: error.message
     })
   }
-
 })
+
+//getting orders by id
+router.get('/:id', async (req, res) => {
+  try {
+    const data = await orders.findOne({ orderid: req.params.id });
+    if (data === null) {
+      return res.status(500).json({
+        status: "failure",
+        message: "no orders found"
+      })
+    }
+    res.status(200).json({
+      status: "success",
+      data: data
+    })
+  } catch (error) {
+    res.status(500).json({
+      status: "failure",
+      message: error.message
+    })
+  }
+})
+
+
+
 
 router.post('/', async (req, res) => {
   try {
+    const id = await orderIdModel.findOne({ _id: "6329931ec2ef4d95d27b8e6e" });
     const data = await orders.create({
       totalItem: req.body.totalItem,
-      orderDate: req.body.orderDate,
+      orderDate: String(new Date()),
       totalPrice: req.body.totalPrice,
       status: req.body.status,
+      orderid: orderIdString + id.orderid,
+      user: req.user,
       StoreInformation: {
         storeLocation: req.body.storeLocation,
         storeAddress: req.body.storeAddress,
@@ -55,11 +75,15 @@ router.post('/', async (req, res) => {
         price: req.body.Shirts.price
       }
     })
+
+    const newId = await orderIdModel.updateOne({ _id: "6329931ec2ef4d95d27b8e6e" }, { orderid: id.orderid + 1 });
     res.status(200).json({
       status: "success",
       posts: data
     })
+
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       status: "failure",
       message: error.message

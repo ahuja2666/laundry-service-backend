@@ -1,5 +1,3 @@
-// order schema
-
 const mongoose = require("mongoose");
 const orderDetails = new mongoose.Schema({
   orderid: { type: String, required: true },
@@ -7,7 +5,7 @@ const orderDetails = new mongoose.Schema({
   orderDate: String,
   totalPrice: Number,
   status: String,
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "LaundryUsers" },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "LaundryUsers", required: true },
   StoreInformation: {
     storeLocation: String,
     storeAddress: String,
