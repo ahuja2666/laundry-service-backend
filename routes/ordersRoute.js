@@ -1,60 +1,93 @@
 // get post and delete orders only loged in user can do
+const router = require("express").Router();
+const orders = require("../models/orderModel");
+let orderIdString = "OR";
+let orderIdModel = require("../models/orderId");
 
-const express = require('express');
-const router = express.Router();
-const orders = require('../models/orderModel')
 
-router.get('/',async(req,res)=>{
-    try {
-        const data = await orders.find({user : req.user});
+// getting all orders
+router.get('/', async (req, res) => {
+  try {
+    const data = await orders.find({ user: req.user });
     res.status(200).json({
-        status : "success",
-        data : data
+      status: "success",
+      data: data
     })
-    } catch (error) {
-        res.status(500).json({
-            status : "failure",
-            message: error.message
-        })
-    }
+  } catch (error) {
+    res.status(500).json({
+      status: "failure",
+      message: error.message
+    })
+  }
 })
 
-router.post('/',async(req,res)=>{
-    try {
-        const data = await orders.create({
-            totalItem : req.body.totalItem,
-            orderDate : req.body.orderDate,
-            totalPrice: req.body.totalPrice,
-            status : req.body.status,
-            user : req.user,
-            StoreInformation : {
-              storeLocation : req.body.storeLocation,
-              storeAddress: req.body.storeAddress,
-              phone : req.body.phone
-            },
-            UserAddress: {
-              title : req.body.title,
-              district: req.body.district,
-              address: req.body.address
-            },
-            Shirts: {
-              quantity:  req.body.Shirts.quantity,
-              washingmachine:  req.body.Shirts.washingmachine,
-              ironing:  req.body.Shirts.ironing,
-              towel:  req.body.Shirts.towel,
-              bleach:  req.body.Shirts.bleach,
-              price:  req.body.Shirts.price
-            }
-        })
-    res.status(200).json({
-        status : "success",
-        posts : data
-    })
-    } catch (error) {
-        res.status(500).json({
-            status : "failure",
-            message: error.message
-        })
+//getting orders by id
+router.get('/:id', async (req, res) => {
+  try {
+    const data = await orders.findOne({ orderid: req.params.id });
+    if (data === null) {
+      return res.status(500).json({
+        status: "failure",
+        message: "no orders found"
+      })
     }
+    res.status(200).json({
+      status: "success",
+      data: data
+    })
+  } catch (error) {
+    res.status(500).json({
+      status: "failure",
+      message: error.message
+    })
+  }
+})
+
+
+
+
+router.post('/', async (req, res) => {
+  try {
+    const id = await orderIdModel.findOne({ _id: "6329931ec2ef4d95d27b8e6e" });
+    const data = await orders.create({
+      totalItem: req.body.totalItem,
+      orderDate: String(new Date()),
+      totalPrice: req.body.totalPrice,
+      status: req.body.status,
+      orderid: orderIdString + id.orderid,
+      user: req.user,
+      StoreInformation: {
+        storeLocation: req.body.storeLocation,
+        storeAddress: req.body.storeAddress,
+        phone: req.body.phone
+      },
+      UserAddress: {
+        title: req.body.title,
+        district: req.body.district,
+        address: req.body.address
+      },
+      Shirts: {
+        quantity: req.body.Shirts.quantity,
+        washingmachine: req.body.Shirts.washingmachine,
+        ironing: req.body.Shirts.ironing,
+        towel: req.body.Shirts.towel,
+        bleach: req.body.Shirts.bleach,
+        price: req.body.Shirts.price
+      }
+    })
+
+    const newId = await orderIdModel.updateOne({ _id: "6329931ec2ef4d95d27b8e6e" }, { orderid: id.orderid + 1 });
+    res.status(200).json({
+      status: "success",
+      posts: data
+    })
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "failure",
+      message: error.message
+    })
+  }
 })
 module.exports = router;

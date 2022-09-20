@@ -1,20 +1,18 @@
-// order schema
-
 const mongoose = require("mongoose");
 const orderDetails = new mongoose.Schema({
-  // orderid: { type: String, required: true },
-  totalItem : Number,
-  orderDate : String,
+  orderid: { type: String, required: true },
+  totalItem: Number,
+  orderDate: String,
   totalPrice: Number,
-  status : String,
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "LaundryUsers",required: true },
-  StoreInformation : {
-    storeLocation : String,
+  status: String,
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "LaundryUsers", required: true },
+  StoreInformation: {
+    storeLocation: String,
     storeAddress: String,
-    phone : Number
+    phone: Number
   },
   UserAddress: {
-    title : String,
+    title: String,
     district: String,
     address: String
   },
@@ -73,10 +71,20 @@ const orderDetails = new mongoose.Schema({
     towel: { type: Boolean, default: false },
     bleach: { type: Boolean, default: false },
     price: { type: Number, default: 0 },
+  },
+  StoreInformation: {
+    storeLocation: String,
+    storeAddress: String,
+    phone: Number
+  },
+  UserAddress: {
+    title: String,
+    district: String,
+    address: String
   }
 
 });
 
-const orders = mongoose.model('orders',orderDetails);
+const orders = mongoose.model('orders', orderDetails);
 
 module.exports = orders;
