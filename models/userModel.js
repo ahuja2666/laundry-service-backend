@@ -65,4 +65,4 @@ const validate = (data) => {
 	return schema.validate(data);
 };
 
-module.exports = { UserData, validate };
+module.exports = {UserData,validate};
