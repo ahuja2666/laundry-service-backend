@@ -1,14 +1,13 @@
 // order schema
 
 const mongoose = require("mongoose");
-
 const orderDetails = new mongoose.Schema({
   // orderid: { type: String, required: true },
   totalItem : Number,
   orderDate : String,
   totalPrice: Number,
   status : String,
-  // user: { type: Schema.Types.ObjectId, ref: "UserData" },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "LaundryUsers" },
   StoreInformation : {
     storeLocation : String,
     storeAddress: String,

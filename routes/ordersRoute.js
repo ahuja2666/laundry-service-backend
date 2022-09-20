@@ -22,8 +22,6 @@ router.get('/',async(req,res)=>{
 
 router.post('/',async(req,res)=>{
     try {
-
-        
         const data = await orders.create({
             totalItem : req.body.totalItem,
             orderDate : req.body.orderDate,
@@ -40,12 +38,12 @@ router.post('/',async(req,res)=>{
               address: req.body.address
             },
             Shirts: {
-              quantity:  req.body.quantity,
-              washingmachine:  req.body.washingmachine,
-              ironing:  req.body.ironing,
-              towel:  req.body.towel,
-              bleach:  req.body.bleach,
-              price:  req.body.price
+              quantity:  req.body.Shirts.quantity,
+              washingmachine:  req.body.Shirts.washingmachine,
+              ironing:  req.body.Shirts.ironing,
+              towel:  req.body.Shirts.towel,
+              bleach:  req.body.Shirts.bleach,
+              price:  req.body.Shirts.price
             }
         })
     res.status(200).json({
