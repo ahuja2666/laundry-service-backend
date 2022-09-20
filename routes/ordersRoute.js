@@ -6,10 +6,10 @@ const orders = require('../models/orderModel')
 
 router.get('/',async(req,res)=>{
     try {
-        const data = await orders.find();
+        const data = await orders.find({user : req.user});
     res.status(200).json({
         status : "success",
-        posts : data
+        data : data
     })
     } catch (error) {
         res.status(500).json({
@@ -17,7 +17,6 @@ router.get('/',async(req,res)=>{
             message: error.message
         })
     }
-    
 })
 
 router.post('/',async(req,res)=>{
@@ -27,6 +26,7 @@ router.post('/',async(req,res)=>{
             orderDate : req.body.orderDate,
             totalPrice: req.body.totalPrice,
             status : req.body.status,
+            user : req.user,
             StoreInformation : {
               storeLocation : req.body.storeLocation,
               storeAddress: req.body.storeAddress,
