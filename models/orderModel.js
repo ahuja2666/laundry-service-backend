@@ -8,6 +8,7 @@ const orderDetails = new mongoose.Schema({
   orderDate : String,
   totalPrice: Number,
   status : String,
+  user: { type: Schema.Types.ObjectId, ref: "UserData" },
   Shirts: {
     quantity: { type: Number, default: 0 },
     washingmachine: { type: Boolean, default: false },
