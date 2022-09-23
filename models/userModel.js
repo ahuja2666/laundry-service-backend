@@ -41,6 +41,7 @@ const UserSchema = new mongoose.Schema({
 });
 
 
+// jwt token
 
 UserSchema.methods.generateAuthToken = function () {
 	const token = jwt.sign({ _id: this._id }, JWTPRIVATEKEY, {
@@ -50,6 +51,9 @@ UserSchema.methods.generateAuthToken = function () {
 };
 
 const UserData = new mongoose.model("LaundryUsers", UserSchema);
+
+
+// validate part
 
 const validate = (data) => {
 	const schema = Joi.object({
@@ -66,3 +70,4 @@ const validate = (data) => {
 };
 
 module.exports = { UserData, validate };
+

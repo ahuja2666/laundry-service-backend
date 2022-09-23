@@ -1,6 +1,9 @@
+
 const mongoose = require("mongoose")
 const express = require('express')
-const bodyParser=require("body-parser")
+const orderRoutes = require('./routes/ordersRoute')
+
+
 require("dotenv").config();
 const app = express();
 const cors = require("cors");
@@ -24,13 +27,11 @@ mongoose.connect("mongodb+srv://tsawant635:tsawant635@cluster0.r6b5bha.mongodb.n
 
 const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/auth");
-const ordersRoutes = require("./routes/ordersRoute");
 
 // routes
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
-app.use("/api/orders", ordersRoutes);
+app.use('/orders',orderRoutes);
 
 app.get('/', (req, res) => res.send('Hello World!'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
-
