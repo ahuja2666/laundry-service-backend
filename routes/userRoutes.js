@@ -1,5 +1,3 @@
-
-// log in and register  
 const router = require("express").Router();
 const { UserData, validate } = require("../models/userModel");
 const bcrypt = require("bcrypt");
@@ -17,6 +15,12 @@ router.post("/", async (req, res) => {
 			return res
 				.status(409)
 				.send({ message: "User with given email already Exist!" });
+		
+		const userphone = await UserData.findOne({ phone: req.body.phone });
+		if (userphone)
+			return res
+				.status(409)
+				.send({ message: "User with given phone already Exist!" });
 
 		const salt = await bcrypt.genSalt(Number(SALT));
 		const hashPassword = await bcrypt.hash(req.body.password, salt);
