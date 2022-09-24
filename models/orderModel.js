@@ -1,90 +1,58 @@
 const mongoose = require("mongoose");
 const orderDetails = new mongoose.Schema({
   orderid: { type: String, required: true },
-  totalItem: Number,
+  totalItems: Number,
   orderDate: String,
   totalPrice: Number,
   status: String,
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "LaundryUsers", required: true },
-  StoreInformation: {
-    storeLocation: String,
-    storeAddress: String,
-    phone: Number
-  },
-  UserAddress: {
-    title: String,
-    district: String,
-    address: String
-  },
-  Shirts: {
-    quantity: { type: Number, default: 0 },
-    washingmachine: { type: Boolean, default: false },
-    ironing: { type: Boolean, default: false },
-    towel: { type: Boolean, default: false },
-    bleach: { type: Boolean, default: false },
-    price: { type: Number, default: 0 },
-  },
-  Tshirts: {
-    quantity: { type: Number, default: 0 },
-    washingmachine: { type: Boolean, default: false },
-    ironing: { type: Boolean, default: false },
-    towel: { type: Boolean, default: false },
-    bleach: { type: Boolean, default: false },
-    price: { type: Number, default: 0 },
-  },
-  Trousers: {
-    quantity: { type: Number, default: 0 },
-    washingmachine: { type: Boolean, default: false },
-    ironing: { type: Boolean, default: false },
-    towel: { type: Boolean, default: false },
-    bleach: { type: Boolean, default: false },
-    price: { type: Number, default: 0 },
-  },
-  Jeans: {
-    quantity: { type: Number, default: 0 },
-    washingmachine: { type: Boolean, default: false },
-    ironing: { type: Boolean, default: false },
-    towel: { type: Boolean, default: false },
-    bleach: { type: Boolean, default: false },
-    price: { type: Number, default: 0 },
-  },
-  Boxers: {
-    quantity: { type: Number, default: 0 },
-    washingmachine: { type: Boolean, default: false },
-    ironing: { type: Boolean, default: false },
-    towel: { type: Boolean, default: false },
-    bleach: { type: Boolean, default: false },
-    price: { type: Number, default: 0 },
-  },
-  Joggers: {
-    quantity: { type: Number, default: 0 },
-    washingmachine: { type: Boolean, default: false },
-    ironing: { type: Boolean, default: false },
-    towel: { type: Boolean, default: false },
-    bleach: { type: Boolean, default: false },
-    price: { type: Number, default: 0 },
-  },
-  Others: {
-    quantity: { type: Number, default: 0 },
-    washingmachine: { type: Boolean, default: false },
-    ironing: { type: Boolean, default: false },
-    towel: { type: Boolean, default: false },
-    bleach: { type: Boolean, default: false },
-    price: { type: Number, default: 0 },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "LaundryUsers",
+    required: true,
   },
   StoreInformation: {
     storeLocation: String,
     storeAddress: String,
     phone: Number
   },
-  UserAddress: {
-    title: String,
-    district: String,
-    address: String
-  }
-
+  // UserAddress: {
+  //   title: String,
+  //   district: String,
+  //   address: String
+  // },
+  Orders: [
+    {
+      name: { type: String},
+      subprice: { type: Number},
+      quantity: { type: Number},
+      price: { type: Number},
+      washprice: { type: Number},
+      washes: [
+        {
+          name: {type: String},
+          price: {type: Number},
+          imgNormal: {type: String},
+          imgBlue: {type: String},
+          id: {type: Number}
+        },
+      ],
+    },
+  ],
 });
 
-const orders = mongoose.model('orders', orderDetails);
+const orders = mongoose.model("orders", orderDetails);
 
 module.exports = orders;
+
+
+
+
+
+
+
+
+
+
+
+
+
