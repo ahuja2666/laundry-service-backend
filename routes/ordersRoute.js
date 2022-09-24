@@ -72,7 +72,7 @@ router.post('/', async (req, res) => {
     const newId = await orderIdModel.updateOne({ _id: "6329931ec2ef4d95d27b8e6e" }, { orderid: id.orderid + 1 });
     res.status(200).json({
       status: "success",
-      posts: data
+      OrderData: data
     })
 
   } catch (error) {
