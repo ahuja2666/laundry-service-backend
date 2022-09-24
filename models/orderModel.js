@@ -15,11 +15,6 @@ const orderDetails = new mongoose.Schema({
     storeAddress: String,
     phone: Number
   },
-  // UserAddress: {
-  //   title: String,
-  //   district: String,
-  //   address: String
-  // },
   Orders: [
     {
       name: { type: String},

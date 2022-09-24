@@ -43,13 +43,8 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-
-
-
 router.post('/', async (req, res) => {
   try {
-    // const {orderItems,totalItems,totalPrice}=req.body;
-    // console.log(req.body)
     const id = await orderIdModel.findOne({ _id: "6329931ec2ef4d95d27b8e6e" });
     const data = await orders.create({
       totalItems: req.body.totalItems,
@@ -59,11 +54,6 @@ router.post('/', async (req, res) => {
       orderid: orderIdString + id.orderid,
       user: req.user,
       StoreInformation: req.body.StoreInformation,
-      // UserAddress: {
-      //   title: req.body.title,
-      //   district: req.body.district,
-      //   address: req.body.address
-      // },
       Orders : req.body.Orders
     })
 
