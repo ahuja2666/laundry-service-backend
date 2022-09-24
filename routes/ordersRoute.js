@@ -50,7 +50,7 @@ router.post('/', async (req, res) => {
   try {
     const id = await orderIdModel.findOne({ _id: "6329931ec2ef4d95d27b8e6e" });
     const data = await orders.create({
-      totalItem: req.body.totalItem,
+      totalItems: req.body.totalItems,
       orderDate: String(new Date()),
       totalPrice: req.body.totalPrice,
       status: req.body.status,
@@ -66,14 +66,7 @@ router.post('/', async (req, res) => {
         district: req.body.district,
         address: req.body.address
       },
-      Shirts: {
-        quantity: req.body.Shirts.quantity,
-        washingmachine: req.body.Shirts.washingmachine,
-        ironing: req.body.Shirts.ironing,
-        towel: req.body.Shirts.towel,
-        bleach: req.body.Shirts.bleach,
-        price: req.body.Shirts.price
-      }
+       Orders : req.body.Orders
     })
 
     const newId = await orderIdModel.updateOne({ _id: "6329931ec2ef4d95d27b8e6e" }, { orderid: id.orderid + 1 });
