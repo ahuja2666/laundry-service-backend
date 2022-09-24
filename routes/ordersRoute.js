@@ -43,9 +43,6 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-
-
-
 router.post('/', async (req, res) => {
   try {
     const id = await orderIdModel.findOne({ _id: "6329931ec2ef4d95d27b8e6e" });
@@ -56,23 +53,14 @@ router.post('/', async (req, res) => {
       status: req.body.status,
       orderid: orderIdString + id.orderid,
       user: req.user,
-      StoreInformation: {
-        storeLocation: req.body.storeLocation,
-        storeAddress: req.body.storeAddress,
-        phone: req.body.phone
-      },
-      UserAddress: {
-        title: req.body.title,
-        district: req.body.district,
-        address: req.body.address
-      },
-       Orders : req.body.Orders
+      StoreInformation: req.body.StoreInformation,
+      Orders : req.body.Orders
     })
 
     const newId = await orderIdModel.updateOne({ _id: "6329931ec2ef4d95d27b8e6e" }, { orderid: id.orderid + 1 });
     res.status(200).json({
       status: "success",
-      OrderData: data
+      // OrderData: data
     })
 
   } catch (error) {
