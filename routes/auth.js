@@ -26,24 +26,32 @@ router.post("/", async (req, res) => {
 		}
 
 		
-		const username=user.name
+		const username=user.name     // use for to show name in order page
+		const useraddress=user.address
 
 		const validPassword = await bcrypt.compare(
 			req.body.password,
 			user.password
 		);
 		if (!validPassword)
-			return res.status(401).send({ message: "Invalid Password" });
-
+			return res.status(401).send({ message: "Invalid Password" })
          
 		const token = user.generateAuthToken();
-       
-		res.status(200).send({ data: [username,token] , message: "logged in successfully" });
+    
+		res.status(200).send({ data: [username,token,useraddress] , message: "logged in successfully" });    // send to fe
        
 	} catch (error) {
 		console.log(error)
 		res.status(500).send({ message: "Internal Server Error" });
 	}
 });
+
+// const validate = (data) => {
+// 	const schema = Joi.object({
+// 		email: Joi.string().email().required().label("Email"),
+// 		password: Joi.string().required().label("Password"),
+// 	});
+// 	return schema.validate(data);
+// };
 
 module.exports = router;
